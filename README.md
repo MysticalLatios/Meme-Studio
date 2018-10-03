@@ -8,8 +8,5 @@ A streamlined application for the creation, editing, and sharing memes
 
 Worked on by
 Joshua Alpert - Mystical
-<<<<<<< HEAD
 Zachary Freeman - zeefree
-=======
 Jeremy Walker - jwalker884
->>>>>>> a3909e58f5234637699fab2130e821a0003be793
