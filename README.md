@@ -8,3 +8,4 @@ A streamlined application for the creation, editing, and sharing memes
 
 Worked on by
 Joshua Alpert - Mystical
+Zachary Freeman - zeefree
