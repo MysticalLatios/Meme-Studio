@@ -14,3 +14,11 @@ Zachary Freeman - zeefree
 
 Jeremy Walker - jwalker884
 
+
+
+In order to work on this using windows you will need gtk3
+
+Follow this guide
+
+
+https://pygobject.readthedocs.io/en/latest/getting_started.html
