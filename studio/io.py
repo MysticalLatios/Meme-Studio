@@ -1,6 +1,7 @@
 #This file is to read in and export images
 
 import image_map
+import filters
 
 #Opens up a ppm and returns it as a ppm
 def open_PPM(ppm_file_name):
@@ -64,35 +65,7 @@ def open_PPM(ppm_file_name):
             if x == image.get_x():
                 x = 0
                 y = y + 1
-
-
-
-        '''
-        for line in lines:
-            raw_pixle_list = line.split()
-            #While the list is not empty, get stuff from it
-            while raw_pixle_list != []:
-                pix = image_map.pixel()
-                temp_raw = []
-
-                for i in range(0,3):
-                    #Get the first item
-                    temp_raw.append(raw_pixle_list[0])
-                    #Then remove the first item
-                    raw_pixle_list.pop(0)
-
-                pix.set_red(temp_raw[0])
-                pix.set_green(temp_raw[1])
-                pix.set_blue(temp_raw[2])
                 
-                pix.print_pixle()
-                image.add_to_map(x, y, pix)
-
-                x = x + 1
-
-            #After the while ends, we are on our next line
-            y = y + 1
-        '''
         return image
 
 def write_PPM(img_export: image_map.ppm):
@@ -141,6 +114,8 @@ def write_PPM(img_export: image_map.ppm):
 
 
 berg = open_PPM("bunny.ppm")
+
+filters.more_blue(berg)
 
 write_PPM(berg)
 
