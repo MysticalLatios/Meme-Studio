@@ -6,6 +6,7 @@ from collections import defaultdict
 nested_dict = lambda: defaultdict(nested_dict)
 
 class pixel:
+    '''This class is for holding our pixel data '''
     red_value = 0
     green_value = 0
     blue_value = 0
@@ -28,6 +29,13 @@ class pixel:
 
     def get_blue(self):
         return self.blue_value
+
+    def get_pixel_raw(self):
+        '''returns a pixel as a string '''
+        return (str(self.red_value) + " " + str(self.green_value) + " " + str(self.blue_value) + " ")
+
+    def print_pixle(self):
+        print("Im a pixel and my rgb is: " + str(self.red_value) + " " + str(self.green_value) + " " + str(self.blue_value) + "\n")
     
 
 class ppm:
@@ -55,20 +63,27 @@ class ppm:
     def set_max_rgb(self, rgb):
         self.max_rgb = rgb
 
-     def get_spec(self):
-        return self.ppm_spec
+    def get_spec(self):
+       return self.ppm_spec
 
     def get_x(self):
-        return self.dimension_x 
+        return int(self.dimension_x)
 
     def get_y(self):
-        return self.dimension_y
+        return int(self.dimension_y)
 
     def get_max_rgb(self):
         return self.max_rgb
 
     def add_to_map(self, x, y, pix):
         self.image_map[x][y] = pix
+
+    def get_pixel(self, x, y):
+        return self.image_map[x][y]
+
+    def get_pixel_raw(self, x, y):
+        '''Returns the pixel as a string'''
+        return self.image_map[x][y].get_pixel_raw()
 
 
 
