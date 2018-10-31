@@ -1,6 +1,9 @@
 #Its how we store our images
 
+from collections import defaultdict
 
+#Set up dicts in dicts
+nested_dict = lambda: defaultdict(nested_dict)
 
 class pixel:
     red_value = 0
@@ -37,7 +40,7 @@ class ppm:
     #First key is xpos
     #Second key is ypos
     #Second is a pixel
-    image_map = {{}}
+    image_map = nested_dict()
 
 
     def set_spec(self, spec):
@@ -65,7 +68,7 @@ class ppm:
         return self.max_rgb
 
     def add_to_map(self, x, y, pix):
-        self.image_map.add(x,{y:pix})
+        self.image_map[x][y] = pix
 
 
 
