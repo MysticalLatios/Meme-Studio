@@ -6,7 +6,7 @@ class pixel:
     red_value = 0
     green_value = 0
     blue_value = 0
-    max_rgb = 255; #This is hardcoded for now TODO:add it as required input in the pixel constructor
+    max_rgb = 255 #This is hardcoded for now TODO:add it as required input in the pixel constructor
 
     def set_red(self, value):
         self.red_value = value
@@ -17,6 +17,15 @@ class pixel:
     def set_blue(self, value):
         self.blue_value = value
 
+    def get_red(self):
+        return self.red_value
+
+    def get_green(self):
+        return self.green_value 
+
+    def get_blue(self):
+        return self.blue_value
+    
 
 class ppm:
     ppm_spec = 0
@@ -42,6 +51,18 @@ class ppm:
 
     def set_max_rgb(self, rgb):
         self.max_rgb = rgb
+
+     def get_spec(self):
+        return self.ppm_spec
+
+    def get_x(self):
+        return self.dimension_x 
+
+    def get_y(self):
+        return self.dimension_y
+
+    def get_max_rgb(self):
+        return self.max_rgb
 
     def add_to_map(self, x, y, pix):
         self.image_map.add(x,{y:pix})
