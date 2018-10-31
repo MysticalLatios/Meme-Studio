@@ -79,6 +79,7 @@ class ppm:
         self.image_map[x][y] = pix
 
     def get_pixel(self, x, y):
+        '''returns the pixel based on location'''
         return self.image_map[x][y]
 
     def get_pixel_raw(self, x, y):
