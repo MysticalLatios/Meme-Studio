@@ -1,5 +1,8 @@
-import image_map
+#File for handling out filters
 import random
+
+from studio import image_map
+
 
 #lets make it more blue
 def more_blue(img_in: image_map.ppm):

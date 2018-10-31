@@ -1,7 +1,12 @@
 #This file is to read in and export images
 
-import image_map
-import filters
+#Import root directory into system path
+import sys
+sys.path.append("..")
+
+
+from studio import image_map
+from studio import filters
 
 #Opens up a ppm and returns it as a ppm
 def open_PPM(ppm_file_name):
