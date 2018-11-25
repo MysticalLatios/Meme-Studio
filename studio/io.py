@@ -4,10 +4,19 @@
 import sys
 sys.path.append("..")
 
-from PIL import image
+from PIL import Image
 
 from studio import image_map
 from studio import filters
+
+def open_Image(file_name):
+    '''Opens an image file using pillow.
+        Returns a PIL image'''
+    #A single line of code, replacing what was once 60 lines of code
+    im = Image.open(file_name)
+    
+    return im
+
 
 #Opens up a ppm and returns it as a ppm
 def open_PPM(ppm_file_name):
