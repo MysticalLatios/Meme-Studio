@@ -4,6 +4,7 @@
 import sys
 sys.path.append("..")
 
+from PIL import image
 
 from studio import image_map
 from studio import filters
