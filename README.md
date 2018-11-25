@@ -16,9 +16,8 @@ Jeremy Walker - jwalker884
 
 
 
-In order to work on this using windows you will need gtk3
-
-Follow this guide
+In order to work on this using windows you will need these libraries
 
 
-https://pygobject.readthedocs.io/en/latest/getting_started.html
+Pillow
+wxpython
