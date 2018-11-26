@@ -13,6 +13,7 @@ class MemeStudioGUI(wx.Frame):
         toolbar = self.CreateToolBar()
         themenubar = wx.MenuBar()
         #toolbar.SetToolBitmapSize((16, 16))
+        # adding comment here for change. Also, icons should be fixed below
         savetool = toolbar.AddTool(wx.ID_ANY, 'Save', wx.Bitmap('Meme_Studio_Icons/save.png'))
         undotool = toolbar.AddTool(wx.ID_ANY, 'Undo', wx.Bitmap('Meme_Studio_Icons/undo.png'))
         redotool = toolbar.AddTool(wx.ID_ANY, 'Redo', wx.Bitmap('Meme_Studio_Icons/redo.png'))
