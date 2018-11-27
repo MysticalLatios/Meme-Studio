@@ -38,18 +38,19 @@ class MemeStudioGUI(wx.Frame):
         themenubar.Append(menuSelect, '&Select')
         themenubar.Append(menuHelp, '&Help')
         # submenu option for file tab
-        fileItem = menuFile.Append(wx.ID_EXIT, 'Quit', 'Quit Option')
-        fileItem2 = menuFile.Append(wx.ID_EXIT, 'Open file', 'Open File Option')
-        fileItem3 = menuFile.Append(wx.ID_EXIT, 'Save file', 'Save File Option')
-        fileItem4 = menuFile.Append(wx.ID_EXIT, 'Save file as...', 'Saving File As Option')
-        fileItem5 = menuFile.Append(wx.ID_EXIT, 'Export...', 'Export Option')
+        fileQuit = menuFile.Append(wx.ID_ANY, 'Quit', 'Quit Option')
+        fileOpen = menuFile.Append(wx.ID_ANY, 'Open file', 'Open File Option')
+        fileSave = menuFile.Append(wx.ID_EXIT, 'Save file', 'Save File Option')
+        fileISaveAs = menuFile.Append(wx.ID_EXIT, 'Save file as...', 'Saving File As Option')
+        fileExport = menuFile.Append(wx.ID_EXIT, 'Export...', 'Export Option')
         toolItem = menuTools.Append(wx.ID_EXIT, 'Open Tools', 'Open Tools Application')
 
         # these are our binds for menubar and toolbar methods
         # Note that all are set to quit the program until
         # actual functions are implemented
         self.SetMenuBar(themenubar)
-        self.Bind(wx.EVT_MENU, self.OnQuit, fileItem)
+        self.Bind(wx.EVT_MENU, self.OnQuit, fileQuit)
+        self.Bind(wx.EVT_MENU, self.onBrowse, fileOpen)
         self.Bind(wx.EVT_MENU, self.OnQuit, toolItem)
         self.Bind(wx.EVT_TOOL, self.OnQuit, savetool)
         self.Bind(wx.EVT_TOOL, self.OnQuit, undotool)
@@ -60,6 +61,7 @@ class MemeStudioGUI(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.OnQuit, deselecttool)
 
 
+
         # this is the size of our window, title, etc
         self.SetSize((1000, 800))
         self.SetTitle('Meme Studio (Main Frame)')
@@ -68,6 +70,10 @@ class MemeStudioGUI(wx.Frame):
     # function for quitting our application, under the file menu tab (?)
     def OnQuit(self, e):
         self.Close()
+    
+    #calls on the ImageBrowse class and makes a instance here
+    def onBrowse(Self, e):
+        self.ImageBrowse = ImageBrowse()
 
     # Here we will instantiate our Tools window
 class ToolFrame(wx.Frame):
