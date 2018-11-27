@@ -17,6 +17,11 @@ def open_Image(file_name):
     
     return im
 
+def write_Image(file_name, img :Image):
+    '''Writes an image out'''
+    img.save(file_name, format=None)
+
+
 
 #Opens up a ppm and returns it as a ppm
 def open_PPM(ppm_file_name):
