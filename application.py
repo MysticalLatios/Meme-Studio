@@ -1,7 +1,7 @@
 #For launching the gui of the program
 import wx
 import sys
-
+import os
 class MemeStudioGUI(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MemeStudioGUI, self).__init__(*args, **kwargs)
@@ -13,6 +13,7 @@ class MemeStudioGUI(wx.Frame):
         toolbar = self.CreateToolBar()
         themenubar = wx.MenuBar()
         #toolbar.SetToolBitmapSize((16, 16))
+        # adding comment here for change. Also, icons should be fixed below
         savetool = toolbar.AddTool(wx.ID_ANY, 'Save', wx.Bitmap('Meme_Studio_Icons/save.png'))
         undotool = toolbar.AddTool(wx.ID_ANY, 'Undo', wx.Bitmap('Meme_Studio_Icons/undo.png'))
         redotool = toolbar.AddTool(wx.ID_ANY, 'Redo', wx.Bitmap('Meme_Studio_Icons/redo.png'))
@@ -37,18 +38,19 @@ class MemeStudioGUI(wx.Frame):
         themenubar.Append(menuSelect, '&Select')
         themenubar.Append(menuHelp, '&Help')
         # submenu option for file tab
-        fileItem = menuFile.Append(wx.ID_EXIT, 'Quit', 'Quit Option')
-        fileItem2 = menuFile.Append(wx.ID_EXIT, 'Open file', 'Open File Option')
-        fileItem3 = menuFile.Append(wx.ID_EXIT, 'Save file', 'Save File Option')
-        fileItem4 = menuFile.Append(wx.ID_EXIT, 'Save file as...', 'Saving File As Option')
-        fileItem5 = menuFile.Append(wx.ID_EXIT, 'Export...', 'Export Option')
+        fileQuit = menuFile.Append(wx.ID_ANY, 'Quit', 'Quit Option')
+        fileOpen = menuFile.Append(wx.ID_ANY, 'Open file', 'Open File Option')
+        fileSave = menuFile.Append(wx.ID_EXIT, 'Save file', 'Save File Option')
+        fileISaveAs = menuFile.Append(wx.ID_EXIT, 'Save file as...', 'Saving File As Option')
+        fileExport = menuFile.Append(wx.ID_EXIT, 'Export...', 'Export Option')
         toolItem = menuTools.Append(wx.ID_EXIT, 'Open Tools', 'Open Tools Application')
 
         # these are our binds for menubar and toolbar methods
         # Note that all are set to quit the program until
         # actual functions are implemented
         self.SetMenuBar(themenubar)
-        self.Bind(wx.EVT_MENU, self.OnQuit, fileItem)
+        self.Bind(wx.EVT_MENU, self.OnQuit, fileQuit)
+        self.Bind(wx.EVT_MENU, self.onBrowse, fileOpen)
         self.Bind(wx.EVT_MENU, self.OnQuit, toolItem)
         self.Bind(wx.EVT_TOOL, self.OnQuit, savetool)
         self.Bind(wx.EVT_TOOL, self.OnQuit, undotool)
@@ -59,6 +61,7 @@ class MemeStudioGUI(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.OnQuit, deselecttool)
 
 
+
         # this is the size of our window, title, etc
         self.SetSize((1000, 800))
         self.SetTitle('Meme Studio (Main Frame)')
@@ -67,6 +70,10 @@ class MemeStudioGUI(wx.Frame):
     # function for quitting our application, under the file menu tab (?)
     def OnQuit(self, e):
         self.Close()
+    
+    #calls on the ImageBrowse class and makes a instance here
+    def onBrowse(Self, e):
+        self.ImageBrowse = ImageBrowse()
 
     # Here we will instantiate our Tools window
 class ToolFrame(wx.Frame):
@@ -88,9 +95,52 @@ class ToolPanel(wx.Panel):
         frame = ToolFrame(title=title)
         self.frame_number += 1
 
+# this is the class for our image browsing window
+# NOTE: this opens a separate window for the browse
+# will find a way to have it be called upon when
+# the MenuBar file --> Open File is selected
+class ImageBrowse(wx.App):
+    def __init__(self, redirect=False, filename=None):
+        wx.App.__init__(self, redirect, filename)
+        self.frame = wx.Frame(None, title='Browse for Image')
 
+        self.panel = wx.Panel(self.frame)
 
-        
+        self.PhotoMaxSize = 480
+
+        self.createBrowse()
+        self.frame.Show()
+    
+    def createBrowse(self):
+        self.photoTxt = wx.TextCtrl(self.panel, size=(200, -1))
+        browseBtn = wx.Button(self.panel, label='Browse')
+        browseBtn.Bind(wx.EVT_BUTTON, self.onBrowse)
+
+        self.mainSizer = wx.BoxSizer(wx.VERTICAL)
+        self.sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.mainSizer.Add(wx.StaticLine(self.panel, wx.ID_ANY), 
+                            0, wx.ALL|wx.EXPAND, 5)
+
+        self.sizer.Add(self.photoTxt, 0, wx.ALL, 5)
+        self.sizer.Add(browseBtn, 0, wx.ALL, 5)
+        self.mainSizer.Add(self.sizer, 0, wx.ALL, 5)
+
+        self.panel.SetSizer(self.mainSizer)
+        self.mainSizer.Fit(self.frame)
+
+        self.panel.Layout()
+
+    def onBrowse(self, event):
+        wildcard = "PNG files (*.png)|*.png"
+        dialog = wx.FileDialog(None, "Choose a file",
+                               wildcard=wildcard,
+                               style=wx.FD_OPEN)
+
+        if dialog.ShowModal() == wx.ID_OK:
+            self.photoTxt.SetValue(dialog.GetPath())
+        dialog.Destroy()
+        self.onView()
 
 #    def OpenTools(self, e):
 #        p = wx.Panel(self)
@@ -110,4 +160,6 @@ def main():
     app.MainLoop()
 
 if __name__ == '__main__':
+    # this is the image file browse function call
+    app = ImageBrowse()
     main() 
