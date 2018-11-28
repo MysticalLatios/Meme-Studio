@@ -199,9 +199,6 @@ class ImageBrowse(wx.App):
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
 
-        self.mainSizer.Add(wx.StaticLine(self.panel, wx.ID_ANY), 
-                            0, wx.ALL|wx.EXPAND, 5)
-
         self.sizer.Add(self.photoTxt, 0, wx.ALL, 5)
         self.sizer.Add(browseBtn, 0, wx.ALL, 5)
         self.mainSizer.Add(self.sizer, 0, wx.ALL, 5)
