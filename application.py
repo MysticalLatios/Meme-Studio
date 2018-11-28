@@ -6,7 +6,7 @@ import os
 import time
 
 from studio import tools
-
+# this is a comment to add for a commit
 #Make a global
 imagebitmap = wx.Bitmap
 WINDOWS = []
@@ -60,7 +60,7 @@ class MemeStudioGUI(wx.Frame):
         menuTools.Check(self.toolItem.GetId(), True)
 
         
-        self.tools = ToolFrame(self, "Meme View")
+        self.tools = ToolFrame(self, "Tool Window")
         self.tools.Show()
 
         # these are our binds for menubar and toolbar methods
@@ -141,18 +141,24 @@ class ToolFrame(wx.Frame):
         p = wx.Panel(self)
         gs = wx.GridSizer(4, 4, 5, 5)
 
-        btnlabel1 = 'Rotate'
-        gs.Add(wx.Button(p, label = btnlabel1), 0, wx.EXPAND)
-
         if WINDOWS != []:
             #Line of code to rotate something 25 degress
             WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), 25))
+
+        rotateBtn = wx.Button(p, wx.ID_ANY, 'Rotate')
+        gs.Add(rotateBtn, 0, wx.EXPAND)
 
         for i in range(1, 16):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
-            p.SetSizer(gs)
+        rotateBtn.Bind(wx.EVT_BUTTON, self.onRotate)
+
+        p.SetSizer(gs)
+
+    def onRotate(self, e):
+    #    userInput = wx.TextEntryDialog(None, 'Rotate by: ',)
+        WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), 25))
 
 
     # this creates the 'canvas' in the actual application
@@ -182,7 +188,10 @@ class ImageWindow(wx.Frame):
         imagebitmap = imgbitmap
 
         self.imageCtrl = wx.StaticBitmap(panel, wx.ID_ANY, 
-                                         imagebitmap)
+                                         wx.Bitmap(img))
+
+        self.imageCtrl.SetBitmap(imagebitmap)
+
 
         
         
