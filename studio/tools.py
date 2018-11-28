@@ -11,7 +11,9 @@ def wx_to_wxbit(img: wx.Image):
     ''' Converts a wx image to a wx bitmap '''
     return img.ConvertToBitmap()
 
-
+def wxbit_to_pil(bit_map):
+    ''' turn a wxbitmap into a pil image '''
+    return wx_to_pil(wxbit_to_wx(bit_map))
 
 def wx_to_pil(img: wx.Image):
     '''turn a WX bitmap into a PIL image one'''
