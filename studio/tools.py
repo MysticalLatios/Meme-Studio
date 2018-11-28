@@ -62,4 +62,4 @@ def resize(img, x_size, y_size):
 
 def rotate(img, rotation):
     ''' rotate an image '''
-    return image.rotate(rotation)
+    return img.rotate(rotation)
