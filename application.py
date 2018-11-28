@@ -243,7 +243,7 @@ class ImageWindow(wx.Frame):
         self.Show()
 
     def update_title(self, e):
-        pos = wx.GetMousePosition()
+        pos = self.imageCtrl.ScreenToClient(wx.GetMousePosition())
         self.SetTitle("Your mouse is at (%s,%s)" % (pos.x, pos.y))
 
     def update_bitmap(self, bitmap):
