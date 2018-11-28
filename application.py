@@ -41,13 +41,23 @@ class MemeStudioGUI(wx.Frame):
         themenubar.Append(menuWindow, '&Window')
         themenubar.Append(menuSelect, '&Select')
         themenubar.Append(menuHelp, '&Help')
+
         # submenu option for file tab
         fileQuit = menuFile.Append(wx.ID_ANY, 'Quit', 'Quit Option')
         fileOpen = menuFile.Append(wx.ID_ANY, 'Open file', 'Open File Option')
         fileSave = menuFile.Append(wx.ID_EXIT, 'Save file', 'Save File Option')
         fileISaveAs = menuFile.Append(wx.ID_EXIT, 'Save file as...', 'Saving File As Option')
         fileExport = menuFile.Append(wx.ID_EXIT, 'Export...', 'Export Option')
-        toolItem = menuTools.Append(wx.ID_EXIT, 'Open Tools', 'Open Tools Application')
+        
+        #toolItem = menuTools.Append(wx.ID_ANY, 'Show Tools', 'Shows Tools Application')
+
+        self.toolItem = menuTools.Append(wx.ID_ANY, 'Show tools',
+            'Show Tool window', kind=wx.ITEM_CHECK)
+        menuTools.Check(self.toolItem.GetId(), True)
+
+        
+        self.tools = ToolFrame("title")
+        self.tools.Show()
 
         # these are our binds for menubar and toolbar methods
         # Note that all are set to quit the program until
@@ -55,7 +65,9 @@ class MemeStudioGUI(wx.Frame):
         self.SetMenuBar(themenubar)
         self.Bind(wx.EVT_MENU, self.OnQuit, fileQuit)
         self.Bind(wx.EVT_MENU, self.onBrowse, fileOpen)
-        self.Bind(wx.EVT_MENU, self.OnQuit, toolItem)
+
+        self.Bind(wx.EVT_MENU, self.toggleTools, self.toolItem)
+
         self.Bind(wx.EVT_TOOL, self.OnQuit, savetool)
         self.Bind(wx.EVT_TOOL, self.OnQuit, undotool)
         self.Bind(wx.EVT_TOOL, self.OnQuit, redotool)
@@ -71,6 +83,7 @@ class MemeStudioGUI(wx.Frame):
         self.SetTitle('Meme Studio (Main Frame)')
         self.Centre()
 
+
         # just testing to see if I can open a new window
         # test = ImageWindow(300, 300)
 
@@ -82,6 +95,13 @@ class MemeStudioGUI(wx.Frame):
     def onBrowse(self, e):
         Image = ImageBrowse()
 
+    def toggleTools(self, e):
+        if self.toolItem.IsChecked():
+            self.tools = ToolFrame("title")
+            self.tools.Show()
+        else:
+            self.tools.Hide()
+
     # Here we will instantiate our Tools window
 class ToolFrame(wx.Frame):
     def __init__(self, title, parent=None):
@@ -92,9 +112,6 @@ class ToolFrame(wx.Frame):
 class ToolPanel(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent)
-
-        btn = wx.Button(self, label = 'Tools Window')
-        btn.Bind(wx.EVT_BUTTON, self.on_new_frame)
         self.frame_number = 1
 
     def on_new_frame(self, event):
