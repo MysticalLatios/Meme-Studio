@@ -197,6 +197,7 @@ class ImageWindow(wx.Frame):
     
 
         panel.SetSizer(self.mainSizer)
+        panel.SetBackgroundColour('#D3D3D3')
 
         self.SetSize(width, height)
 
