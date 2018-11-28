@@ -2,6 +2,11 @@
 import wx
 import sys
 import os
+import time
+
+#global for out bitmap
+imagebitmap : wx.Bitmap
+
 class MemeStudioGUI(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MemeStudioGUI, self).__init__(*args, **kwargs)
@@ -127,6 +132,13 @@ class ImageWindow(wx.Frame):
         self.SetSize(width, height)
         self.SetTitle("Image Layer")
         self.Show()
+
+    def update_map(self):
+        while(True):
+            time.sleep(0.1)
+            self.imageCtrl.SetBitmap(imagebitmap)
+
+
 
 
 
