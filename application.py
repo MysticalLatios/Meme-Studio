@@ -75,7 +75,7 @@ class MemeStudioGUI(wx.Frame):
         self.Close()
     
     #calls on the ImageBrowse class and makes a instance here
-    def onBrowse(Self, e):
+    def onBrowse(self, e):
         Image = ImageBrowse()
 
     # Here we will instantiate our Tools window
@@ -124,7 +124,7 @@ class ImageWindow(wx.Frame):
 
         panel.SetSizer(self.mainSizer)
 
-        self.SetSize(width, height)
+        self.SetSize(10000, 10000)
         self.SetTitle("Image Layer")
         self.Show()
 
@@ -183,12 +183,20 @@ class ImageBrowse(wx.App):
 
     def onView(self):
         filepath = self.photoTxt.GetValue()
-        img = wx.EmptyImage(240,240)
 
+        #Create image given the filepath
         img2 = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+
+        #Get the bit map of the image
         imageBitmap = wx.BitmapFromImage(img2)
 
-        ImageWindow(1000, 1000, imageBitmap)
+        #Get Size of the image to shape the image window size
+        width = img2.GetWidth()
+        height = img2.GetHeight()
+
+
+        #Create image window with the bitmap
+        ImageWindow(width, height, imageBitmap)
 
 
 #    def OpenTools(self, e):
@@ -205,7 +213,7 @@ class ImageBrowse(wx.App):
 def main():
     app = wx.App()
     memestudio = MemeStudioGUI(None)
-    memestudio.Show()
+    #memestudio.Show() Not really needed the init shows the frame
     app.MainLoop()
 
 if __name__ == '__main__':
