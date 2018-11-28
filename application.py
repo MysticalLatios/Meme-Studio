@@ -196,15 +196,25 @@ class ImageWindow(wx.Frame):
 
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         
-        self.mainSizer.Add(self.imageCtrl, 0, wx.ALL, 5)
-
+        self.mainSizer.AddStretchSpacer()
+        self.mainSizer.Add(self.imageCtrl, 0, wx.CENTER)
+        self.mainSizer.AddStretchSpacer()
+        
         panel.SetSizer(self.mainSizer)
 
         self.SetSize(width, height)
 
 
+        self.timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.update_title)
+        self.timer.Start(40)
+
         self.SetTitle("Image Layer")
         self.Show()
+
+    def update_title(self, e):
+        pos = wx.GetMousePosition()
+        self.SetTitle("Your mouse is at (%s,%s)" % (pos.x, pos.y))
 
     def update_bitmap(self, bitmap):
         self.imageCtrl.SetBitmap(bitmap)
