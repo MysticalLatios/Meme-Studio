@@ -58,9 +58,6 @@ class MemeStudioGUI(wx.Frame):
                                         'Show Tool window', kind=wx.ITEM_CHECK)
         menuTools.Check(self.toolItem.GetId(), True)
 
-        
-        self.tools = ToolFrame(self, "Meme View")
-        self.tools.Show()
 
         # these are our binds for menubar and toolbar methods
         # Note that all are set to quit the program until
@@ -79,7 +76,8 @@ class MemeStudioGUI(wx.Frame):
         self.Bind(wx.EVT_TOOL, self.OnQuit, pastetool)
         self.Bind(wx.EVT_TOOL, self.OnQuit, deselecttool)
 
-
+        self.tools = ToolFrame(self, "Tool Window")
+        self.tools.Show()
 
         # this is the size of our window, title, etc
         self.SetSize((400, 300))
@@ -121,7 +119,7 @@ class MemeStudioGUI(wx.Frame):
 
     def toggleTools(self, e):
         if self.toolItem.IsChecked():
-            self.tools = ToolFrame(self, "title")
+            self.tools = ToolFrame(self, "Tool Window")
             self.tools.Show()
         else:
             self.tools.Hide()
@@ -150,9 +148,23 @@ class ToolFrame(wx.Frame):
         for i in range(1, 16):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
-
             p.SetSizer(gs)
 
+
+    
+    def onRotate(self):
+        value = self.txt.GetValue()
+        WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), value))
+
+    def GetRotate(self, e):
+        self.panel = wx.Panel(self)
+        self.int = wx.TextCtrl(self.panel, -1, size=(25,-1))
+        dlg = wx.TextEntryDialog(self.panel, 'Rotate by:',"", 
+                style=wx.OK)
+        dlg.ShowModal()
+        self.txt.SetValue(dlg.GetValue())
+        dlg.Destroy()
+        self.onRotate()
 
     # this creates the 'canvas' in the actual application
 class ToolPanel(wx.Panel):
