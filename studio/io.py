@@ -7,9 +7,9 @@ sys.path.append("..")
 from PIL import Image
 import wx
 
-import tools
-import image_map
-import filters
+from studio import tools
+from studio import image_map
+from studio import filters
 
 def open_Image(file_name):
     '''Opens an image file using pillow.
