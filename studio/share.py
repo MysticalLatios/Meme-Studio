@@ -4,10 +4,10 @@
 import tweepy
 
 #Secrets
-consumer_key ="xxxxxxxxxxxxxxxx"
-consumer_secret ="xxxxxxxxxxxxxxxx"
-access_token ="xxxxxxxxxxxxxxxx"
-access_token_secret ="xxxxxxxxxxxxxxxx"
+from studio.share_secret import consumer_key
+from studio.share_secret import consumer_secret
+from studio.share_secret import access_token
+from studio.share_secret import access_token_secret
 
 
 def tweet(path_to_image, text_of__tweet):

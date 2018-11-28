@@ -105,3 +105,6 @@ venv.bak/
 
 # vdCode settings
 .vscode/
+
+#Secret Files
+studio/share_secret.py
