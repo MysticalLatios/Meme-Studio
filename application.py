@@ -182,12 +182,17 @@ class ImageWindow(wx.Frame):
         self.imageCtrl = wx.StaticBitmap(panel, wx.ID_ANY, 
                                          imagebitmap)
 
+        
+        self.Scrollbar = wx.ScrollBar(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.SB_VERTICAL)
+        
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         
+
+
         self.mainSizer.AddStretchSpacer()
         self.mainSizer.Add(self.imageCtrl, 0, wx.CENTER)
         self.mainSizer.AddStretchSpacer()
-        
+
         panel.SetSizer(self.mainSizer)
 
         self.SetSize(width, height)
