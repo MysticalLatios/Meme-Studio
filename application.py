@@ -6,6 +6,9 @@ import time
 
 from studio import tools
 
+#Make a global
+imagebitmap = wx.Bitmap
+WINDOWS = []
 class MemeStudioGUI(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MemeStudioGUI, self).__init__(*args, **kwargs)
@@ -124,6 +127,7 @@ class ToolPanel(wx.Panel):
 class ImageWindow(wx.Frame):
  # Initiates with width, height, and the bitmap of image  
 
+
     def __init__(self, width, height, imgbitmap: wx.Bitmap):
 
         wx.Frame.__init__(self, None, wx.ID_ANY, "Image Window")
@@ -136,7 +140,7 @@ class ImageWindow(wx.Frame):
         self.imageCtrl = wx.StaticBitmap(panel, wx.ID_ANY, 
                                          wx.BitmapFromImage(img))
 
-        self.imageCtrl.SetBitmap(tools.rotate(imgbitmap, 90))
+        self.imageCtrl.SetBitmap(imagebitmap)
 
 
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -148,17 +152,12 @@ class ImageWindow(wx.Frame):
         self.SetSize(width, height)
         self.SetTitle("Image Layer")
         self.Show()
-        self.update_map()
 
-    def update_map(self):
-        while(True):
-            print("Ahhhhh shit")
-            time.sleep(0.1)
-            self.imageCtrl.SetBitmap(tools.rotate(self.imagebitmap, 25))
+    def update_bitmap(self, bitmap):
+        self.imageCtrl.SetBitmap(bitmap)
 
-
-
-
+    def get_bitmap(self):
+        return self.imageCtrl.GetBitmap()
 
 
 
@@ -224,7 +223,7 @@ class ImageBrowse(wx.App):
 
 
         #Create image window with the bitmap
-        ImageWindow(width, height, imageBitmap)
+        WINDOWS.append(ImageWindow(width, height, imageBitmap))
 
 
 #    def OpenTools(self, e):
