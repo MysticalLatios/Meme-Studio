@@ -71,6 +71,13 @@ def rotate(img, rotation):
     img_conv = wxbit_to_pil(img)
     return pill_to_wxbit(img_conv.rotate(rotation))
 
+def omega_rotate(img, rotation):
+    '''rotate an image but with 100 percent more image destruction'''
+    img_conv = wxbit_to_pil(img)
+    for i in range(0, rotation):
+        img_conv = img_conv.rotate(1)
+    return pill_to_wxbit(img_conv)
+
 def flip_left_right(img: Image):
     '''flip an image left to right'''
     img_conv = wxbit_to_pil(img)
