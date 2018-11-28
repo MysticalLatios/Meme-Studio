@@ -73,7 +73,7 @@ class MemeStudioGUI(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnSaveAs, fileSaveAs)
         self.Bind(wx.EVT_MENU, self.toggleTools, self.toolItem)
 
-        self.Bind(wx.EVT_TOOL, self.OnQuit, savetool)
+        self.Bind(wx.EVT_TOOL, self.OnSaveAs, savetool)
         self.Bind(wx.EVT_TOOL, self.OnQuit, undotool)
         self.Bind(wx.EVT_TOOL, self.OnQuit, redotool)
         self.Bind(wx.EVT_TOOL, self.OnQuit, cuttool)
@@ -176,9 +176,12 @@ class ToolFrame(wx.Frame):
         gs.Add(horizantalFlipBtn, 0, wx.EXPAND)
 
         resizeBtn = wx.Button(p, wx.ID_ANY, 'Resize')
-        gs.Add(resizeBtn, 0, wx.EXPAND)      
+        gs.Add(resizeBtn, 0, wx.EXPAND)
+        
+        jpgBtn = wx.Button(p, wx.ID_ANY, 'To-JPG')
+        gs.Add(jpgBtn, 0, wx.EXPAND)
 
-        for i in range(1, 12):
+        for i in range(1, 11):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
@@ -186,13 +189,14 @@ class ToolFrame(wx.Frame):
         omegaRotateBtn.Bind(wx.EVT_BUTTON, self.onOmegaRotate)
         verticalFlipBtn.Bind(wx.EVT_BUTTON, self.onVerticalFlip)
         horizantalFlipBtn.Bind(wx.EVT_BUTTON, self.onHorizantalFlip)
-        resizeBtn.Bind(wx.EVT_BUTTON, self.onResize)       
+        resizeBtn.Bind(wx.EVT_BUTTON, self.onResize) 
+        jpgBtn.Bind(wx.EVT_BUTTON, self.onJPG)       
 
         p.SetSizer(gs)
 
     def onRotate(self, e):
         if (WINDOWS != []):
-            self.GetRotate()
+            rotate=self.GetRotate()
             value=float(self.txt.GetValue())
             WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), value))
 
@@ -204,11 +208,15 @@ class ToolFrame(wx.Frame):
 
     def onVerticalFlip(self, e):
         if (WINDOWS != []):
-            WINDOWS[0].update_bitmap(tools.flip_left_right(WINDOWS[0].get_bitmap()))
+            WINDOWS[0].update_bitmap(tools.flip_top_bottom(WINDOWS[0].get_bitmap()))
 
+    def onJPG(self, e):
+        if (WINDOWS != []):
+            WINDOWS[0].update_bitmap(tools.jpegify(WINDOWS[0].get_bitmap()))
+            
     def onHorizantalFlip(self, e):
         if (WINDOWS != []):
-            WINDOWS[0].update_bitmap(tools.flip_top_bottom(WINDOWS[0].get_bitmap()))
+            WINDOWS[0].update_bitmap(tools.flip_left_right(WINDOWS[0].get_bitmap()))
 
     def onResize(self, e):
         if (WINDOWS != []):
@@ -216,7 +224,7 @@ class ToolFrame(wx.Frame):
             value=int(self.txt.GetValue())
             y=self.GetY()
             value2=int(self.txt2.GetValue())
-            WINDOWS[0].update_bitmap(tools.resize(WINDOWS[0].get_bitmap(), value, value2))
+            WINDOWS[0].update_bitmap(tools.resize(WINDOWS[0].get_bitmap(), value, value))
     
     def GetRotate(self):
         self.panel = wx.Panel(self)
