@@ -74,7 +74,8 @@ def rotate(img, rotation):
 
 def flip_left_right(img: Image):
     '''flip an image left to right'''
-    return img.transpose(Image.FLIP_LEFT_RIGHT)
+    img_conv = wxbit_to_pil(img)
+    return pill_to_wxbit(img_conv.transpose(Image.FLIP_LEFT_RIGHT))
 
 def flip_top_bottom(img: Image):
     '''flip an image top to bottom (For those images that are a switch(works both ways))'''
