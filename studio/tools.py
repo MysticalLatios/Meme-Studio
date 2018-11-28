@@ -3,6 +3,10 @@
 from PIL import Image
 import wx
 
+def wxbit_to_wx(bit_map):
+    ''' Converts a wx bitmap to a wx image '''
+    return wx.ImageFromBitmap( bit_map )
+
 def wx_to_pil(img: wx.Image):
     '''turn a WX bitmap into a PIL image one'''
     #Make a new image setting the size
