@@ -7,9 +7,9 @@ import time
 
 from studio import tools
 
-#Make a global
-imagebitmap = wx.Bitmap
+#Global list of the windows the images will be on
 WINDOWS = []
+
 class MemeStudioGUI(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MemeStudioGUI, self).__init__(*args, **kwargs)
