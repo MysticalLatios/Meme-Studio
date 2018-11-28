@@ -1,5 +1,6 @@
 #For launching the gui of the program
 import wx
+import wx.lib.scrolledpanel
 import sys
 import os
 import time
@@ -175,8 +176,9 @@ class ImageWindow(wx.Frame):
 
         wx.Frame.__init__(self, None, wx.ID_ANY, "Image Window")
 
-        panel = wx.Panel(self)
+        panel = wx.lib.scrolledpanel.ScrolledPanel(self, -1)
 
+        panel.SetupScrolling()
         imagebitmap = imgbitmap
 
         self.imageCtrl = wx.StaticBitmap(panel, wx.ID_ANY, 
