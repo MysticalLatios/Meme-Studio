@@ -52,11 +52,11 @@ class MemeStudioGUI(wx.Frame):
         #toolItem = menuTools.Append(wx.ID_ANY, 'Show Tools', 'Shows Tools Application')
 
         self.toolItem = menuTools.Append(wx.ID_ANY, 'Show tools',
-            'Show Tool window', kind=wx.ITEM_CHECK)
+                                        'Show Tool window', kind=wx.ITEM_CHECK)
         menuTools.Check(self.toolItem.GetId(), True)
 
         
-        self.tools = ToolFrame("title")
+        self.tools = ToolFrame(self, "Meme View")
         self.tools.Show()
 
         # these are our binds for menubar and toolbar methods
@@ -97,16 +97,30 @@ class MemeStudioGUI(wx.Frame):
 
     def toggleTools(self, e):
         if self.toolItem.IsChecked():
-            self.tools = ToolFrame("title")
+            self.tools = ToolFrame(self, "title")
             self.tools.Show()
         else:
             self.tools.Hide()
 
     # Here we will instantiate our Tools window
 class ToolFrame(wx.Frame):
-    def __init__(self, title, parent=None):
-        wx.Frame.__init__(self, parent=parent, title=title)
+    def __init__(self, parent, title):
+        #wx.Frame.__init__(self, parent=parent, title=title)
+        super(ToolFrame, self).__init__(parent, title = title, size = (300, 200))
+
+        self.InitUI()
+        self.Centre()
         self.Show()
+
+    def InitUI(self):
+        p = wx.Panel(self)
+        gs = wx.GridSizer(4, 4, 5, 5)
+
+        for i in range(1, 17):
+            btn = "Btn" + str(i)
+            gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
+
+            p.SetSizer(gs)
 
     # this creates the 'canvas' in the actual application
 class ToolPanel(wx.Panel):
