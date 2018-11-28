@@ -1,11 +1,12 @@
 from PIL import Image
 import wx
 
-def WX_TO_PIL(img :wx.Image):
+def wx_to_pil(img: wx.Image):
     '''turn a WX bitmap into a PIL image one'''
-    PilImg = Image.new( 'RGB', (img.GetWidth(), img.GetHeight()) ) #Make a new image setting the size
-    PilImg.fromstring( img.GetData() ) #Copy the data into the new image
-    return PilImg #Return that new image
+    #Make a new image setting the size
+    pil_img = Image.new('RGB', (img.GetWidth(), img.GetHeight()))
+    pil_img.fromstring(img.GetData()) #Copy the data into the new image
+    return pil_img #Return that new image
 
-def PIL_TO_WX(img :Image):
+def pil_to_wx(img: Image):
     '''turn a PIL image into a wx one'''
