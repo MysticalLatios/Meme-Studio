@@ -2,6 +2,10 @@
 import wx
 import sys
 import os
+import time
+
+#Global for the bitmap
+imagebitmap = wx.Bitmap
 class MemeStudioGUI(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MemeStudioGUI, self).__init__(*args, **kwargs)
@@ -144,6 +148,12 @@ class ImageWindow(wx.Frame):
         self.SetSize(width, height)
         self.SetTitle("Image Layer")
         self.Show()
+        self.update_map()
+
+    def update_map(self):
+        while(True):
+            time.sleep(0.1)
+            self.imageCtrl.SetBitmap(imagebitmap)
 
 
 
@@ -200,12 +210,20 @@ class ImageBrowse(wx.App):
 
     def onView(self):
         filepath = self.photoTxt.GetValue()
-        img = wx.EmptyImage(240,240)
 
+        #Create image given the filepath
         img2 = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+
+        #Get the bit map of the image
         imageBitmap = wx.BitmapFromImage(img2)
 
-        ImageWindow(1000, 1000, imageBitmap)
+        #Get Size of the image to shape the image window size
+        width = img2.GetWidth()
+        height = img2.GetHeight()
+
+
+        #Create image window with the bitmap
+        ImageWindow(width, height, imageBitmap)
 
 
 #    def OpenTools(self, e):
@@ -222,7 +240,7 @@ class ImageBrowse(wx.App):
 def main():
     app = wx.App()
     memestudio = MemeStudioGUI(None)
-    memestudio.Show()
+    #memestudio.Show() Not really needed the init shows the frame
     app.MainLoop()
 
 if __name__ == '__main__':
