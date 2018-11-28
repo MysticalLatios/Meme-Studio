@@ -153,6 +153,21 @@ class ToolFrame(wx.Frame):
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
             p.SetSizer(gs)
+  
+        def onRotate(self):
+            value = self.txt.GetValue()
+            WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), value))
+
+        def GetRotate(self, e):
+            self.panel = wx.Panel(self)
+            self.int = wx.TextCtrl(self.panel, -1, size=(25,-1))
+            dlg = wx.TextEntryDialog(self.panel, 'Rotate by:',"", 
+                    style=wx.OK)
+            dlg.ShowModal()
+            self.txt.SetValue(dlg.GetValue())
+            dlg.Destroy()
+            self.onRotate()
+        
 
 
     # this creates the 'canvas' in the actual application
