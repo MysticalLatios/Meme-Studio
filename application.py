@@ -167,33 +167,77 @@ class ToolFrame(wx.Frame):
         omegaRotateBtn = wx.Button(p, wx.ID_ANY, 'Omega')
         gs.Add(omegaRotateBtn, 0, wx.EXPAND)
 
-        for i in range(1, 15):
+        verticalFlipBtn = wx.Button(p, wx.ID_ANY, 'Verti-Flip')
+        gs.Add(verticalFlipBtn, 0, wx.EXPAND)
+
+        horizantalFlipBtn = wx.Button(p, wx.ID_ANY, 'Hori-Flip')
+        gs.Add(horizantalFlipBtn, 0, wx.EXPAND)
+
+        resizeBtn = wx.Button(p, wx.ID_ANY, 'Resize')
+        gs.Add(resizeBtn, 0, wx.EXPAND)      
+
+        for i in range(1, 12):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
         rotateBtn.Bind(wx.EVT_BUTTON, self.onRotate)
         omegaRotateBtn.Bind(wx.EVT_BUTTON, self.onOmegaRotate)
+        verticalFlipBtn.Bind(wx.EVT_BUTTON, self.onVerticalFlip)
+        horizantalFlipBtn.Bind(wx.EVT_BUTTON, self.onHorizantalFlip)
+        resizeBtn.Bind(wx.EVT_BUTTON, self.onResize)       
 
         p.SetSizer(gs)
 
     def onRotate(self, e):
         if (WINDOWS != []):
-            rotate=self.GetRotate()
+            self.GetRotate()
             value=float(self.txt.GetValue())
             WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), value))
 
     def onOmegaRotate(self, e):
         if (WINDOWS != []):
-            rotate=self.GetRotate()
+            self.GetRotate()
             value=int(self.txt.GetValue())
             WINDOWS[0].update_bitmap(tools.omega_rotate(WINDOWS[0].get_bitmap(), value))
 
+    def onVerticalFlip(self, e):
+        if (WINDOWS != []):
+            WINDOWS[0].update_bitmap(tools.flip_left_right(WINDOWS[0].get_bitmap()))
+
+    def onHorizantalFlip(self, e):
+        if (WINDOWS != []):
+            WINDOWS[0].update_bitmap(tools.flip_top_bottom(WINDOWS[0].get_bitmap()))
+
+    def onResize(self, e):
+        if (WINDOWS != []):
+            x=self.GetX()
+            value=int(self.txt.GetValue())
+            y=self.GetY()
+            value2=int(self.txt2.GetValue())
+            WINDOWS[0].update_bitmap(tools.resize(WINDOWS[0].get_bitmap(), value, value2))
+    
     def GetRotate(self):
         self.panel = wx.Panel(self)
         self.txt = wx.TextCtrl(self.panel, -1, size=(1,1))
         dlg = wx.TextEntryDialog(self.panel, 'Rotate by:',"", style=wx.OK)
         dlg.ShowModal()
         self.txt.SetValue(dlg.GetValue())
+        dlg.Destroy()
+
+    def GetX(self):
+        self.panel = wx.Panel(self)
+        self.txt = wx.TextCtrl(self.panel, -1, size=(1,1))
+        dlg = wx.TextEntryDialog(self.panel, 'New width:',"", style=wx.OK)
+        dlg.ShowModal()
+        self.txt.SetValue(dlg.GetValue())
+        dlg.Destroy()
+
+    def GetY(self):
+        self.panel = wx.Panel(self)
+        self.txt2 = wx.TextCtrl(self.panel, -1, size=(1,1))
+        dlg = wx.TextEntryDialog(self.panel, 'New Height:',"", style=wx.OK)
+        dlg.ShowModal()
+        self.txt2.SetValue(dlg.GetValue())
         dlg.Destroy()
         
 
