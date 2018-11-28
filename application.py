@@ -116,11 +116,17 @@ class ToolFrame(wx.Frame):
         p = wx.Panel(self)
         gs = wx.GridSizer(4, 4, 5, 5)
 
+        btnlabel1 = 'Rotate'
+        gs.Add(wx.Button(p, label = btnlabel1) 0, wx.EXPAND)
+
+
+
         for i in range(1, 17):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
             p.SetSizer(gs)
+
 
     # this creates the 'canvas' in the actual application
 class ToolPanel(wx.Panel):
