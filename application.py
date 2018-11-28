@@ -99,16 +99,18 @@ class MemeStudioGUI(wx.Frame):
     def OnSaveAs(self, event):
 
         if WINDOWS != []:
-            with wx.FileDialog(self, "Save XYZ file", wildcard="PNG files (*.png)|*.png", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+            file_dialog = wx.FileDialog(self, "Save XYZ file", wildcard="PNG files (*.png)|*.png", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
 
-                if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return     # the user changed their mind
+            if file_dialog.ShowModal() == wx.ID_CANCEL:
+                print("User decided on not saving after all")
+                return     # the user changed their mind
 
         # save the current contents in the file
-            pathname = fileDialog.GetPath()
-            print(pathname)
-            fileDialog.Destroy()
-            io.write_Image(pathname, WINDOWS[0].get_bitmap)
+            print(file_dialog.GetPath())
+            pathname = file_dialog.GetPath()
+            print("Saving to:" + pathname)
+            file_dialog.Destroy()
+            io.write_Image(pathname, WINDOWS[0].get_bitmap())
             
 
     #responsible for the searching of files/images to open, currently only supports png
@@ -297,7 +299,7 @@ class ImageWindow(wx.Frame):
         self.Show()
 
     def update_title(self, e):
-        pos = wx.GetMousePosition()
+        pos = self.imageCtrl.ScreenToClient(wx.GetMousePosition())
         self.SetTitle("Your mouse is at (%s,%s)" % (pos.x, pos.y))
 
     def update_bitmap(self, bitmap):
