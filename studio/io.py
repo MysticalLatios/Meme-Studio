@@ -7,9 +7,9 @@ sys.path.append("..")
 from PIL import Image
 import wx
 
-from studio import tools
-from studio import image_map
-from studio import filters
+import tools
+import image_map
+import filters
 
 def open_Image(file_name):
     '''Opens an image file using pillow.
@@ -27,6 +27,7 @@ def write_Image(file_name, img: wx.Image):
 
 
 #Opens up a ppm and returns it as a ppm
+
 def open_PPM(ppm_file_name):
     image = image_map.ppm()
     with open(ppm_file_name) as ppm_file:
@@ -131,16 +132,6 @@ def write_PPM(img_export: image_map.ppm):
 
 
     
-
-
-
-
-
-berg = open_PPM("bunny.ppm")
-
-filters.more_blue(berg)
-
-write_PPM(berg)
 
 
 
