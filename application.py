@@ -133,6 +133,8 @@ class ImageWindow(wx.Frame):
         self.SetTitle("Image Layer")
         self.Show()
 
+        self.update_map()
+
     def update_map(self):
         while(True):
             time.sleep(0.1)
