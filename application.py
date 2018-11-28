@@ -109,7 +109,8 @@ class MemeStudioGUI(wx.Frame):
                 img2 = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
 
                 #Get the bit map of the image
-                imageBitmap = wx.BitmapFromImage(img2)
+                imageBitmap = wx.Bitmap(img2)
+                #wx.BitmapFromImage(img2)
 
                 #Get Size of the image to shape the image window size
                 width = img2.GetWidth()
@@ -178,12 +179,8 @@ class ImageWindow(wx.Frame):
 
         imagebitmap = imgbitmap
 
-        img = wx.EmptyImage(240,240)
         self.imageCtrl = wx.StaticBitmap(panel, wx.ID_ANY, 
-                                         wx.BitmapFromImage(img))
-
-        self.imageCtrl.SetBitmap(imagebitmap)
-
+                                         imagebitmap)
 
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         
@@ -192,6 +189,8 @@ class ImageWindow(wx.Frame):
         panel.SetSizer(self.mainSizer)
 
         self.SetSize(width, height)
+
+
         self.SetTitle("Image Layer")
         self.Show()
 
@@ -220,5 +219,4 @@ def main():
 
 if __name__ == '__main__':
     # this is the image file browse function call
-    # app = ImageBrowse()
     main() 
