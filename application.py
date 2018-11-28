@@ -109,7 +109,8 @@ class MemeStudioGUI(wx.Frame):
                 img2 = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
 
                 #Get the bit map of the image
-                imageBitmap = wx.BitmapFromImage(img2)
+                imageBitmap = wx.Bitmap(img2)
+                #wx.BitmapFromImage(img2)
 
                 #Get Size of the image to shape the image window size
                 width = img2.GetWidth()
@@ -178,12 +179,8 @@ class ImageWindow(wx.Frame):
 
         imagebitmap = imgbitmap
 
-        img = wx.EmptyImage(240,240)
         self.imageCtrl = wx.StaticBitmap(panel, wx.ID_ANY, 
-                                         wx.BitmapFromImage(img))
-
-        self.imageCtrl.SetBitmap(imagebitmap)
-
+                                         imagebitmap)
 
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
         
@@ -192,6 +189,8 @@ class ImageWindow(wx.Frame):
         panel.SetSizer(self.mainSizer)
 
         self.SetSize(width, height)
+
+
         self.SetTitle("Image Layer")
         self.Show()
 
@@ -200,70 +199,6 @@ class ImageWindow(wx.Frame):
 
     def get_bitmap(self):
         return self.imageCtrl.GetBitmap()
-
-
-
-# this is the class for our image browsing window
-# NOTE: this opens a separate window for the browse
-# will find a way to have it be called upon when
-# the MenuBar file --> Open File is selected
-class ImageBrowse(wx.App):
-    def __init__(self, redirect=False, filename=None):
-        wx.App.__init__(self, redirect, filename)
-        self.frame = wx.Frame(None, title='Browse for Image')
-
-        self.panel = wx.Panel(self.frame)
-
-        self.PhotoMaxSize = 480
-
-        self.createBrowse()
-        self.frame.Show()
-    
-    def createBrowse(self):
-        self.photoTxt = wx.TextCtrl(self.panel, size=(200, -1))
-        browseBtn = wx.Button(self.panel, label='Browse')
-        browseBtn.Bind(wx.EVT_BUTTON, self.onBrowse)
-
-        self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-        self.sizer = wx.BoxSizer(wx.HORIZONTAL)
-
-        self.sizer.Add(self.photoTxt, 0, wx.ALL, 5)
-        self.sizer.Add(browseBtn, 0, wx.ALL, 5)
-        self.mainSizer.Add(self.sizer, 0, wx.ALL, 5)
-
-        self.panel.SetSizer(self.mainSizer)
-        self.mainSizer.Fit(self.frame)
-
-        self.panel.Layout()
-
-    def onBrowse(self, event):
-        wildcard = "PNG files (*.png)|*.png"
-        dialog = wx.FileDialog(None, "Choose a file",
-                               wildcard=wildcard,
-                               style=wx.FD_OPEN)
-
-        if dialog.ShowModal() == wx.ID_OK:
-            self.photoTxt.SetValue(dialog.GetPath())
-        dialog.Destroy()
-        self.onView()
-
-    def onView(self):
-        filepath = self.photoTxt.GetValue()
-
-        #Create image given the filepath
-        img2 = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
-
-        #Get the bit map of the image
-        imageBitmap = wx.BitmapFromImage(img2)
-
-        #Get Size of the image to shape the image window size
-        width = img2.GetWidth()
-        height = img2.GetHeight()
-
-
-        #Create image window with the bitmap
-        WINDOWS.append(ImageWindow(width, height, imageBitmap))
-
 
 #    def OpenTools(self, e):
 #        p = wx.Panel(self)
@@ -284,5 +219,4 @@ def main():
 
 if __name__ == '__main__':
     # this is the image file browse function call
-    # app = ImageBrowse()
     main() 
