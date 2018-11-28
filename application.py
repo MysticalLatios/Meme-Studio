@@ -163,11 +163,15 @@ class ToolFrame(wx.Frame):
         rotateBtn = wx.Button(p, wx.ID_ANY, 'Rotate')
         gs.Add(rotateBtn, 0, wx.EXPAND)
 
-        for i in range(1, 16):
+        omegaRotateBtn = wx.Button(p, wx.ID_ANY, 'Omega')
+        gs.Add(omegaRotateBtn, 0, wx.EXPAND)
+
+        for i in range(1, 15):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
         rotateBtn.Bind(wx.EVT_BUTTON, self.onRotate)
+        omegaRotateBtn.Bind(wx.EVT_BUTTON, self.onOmegaRotate)
 
         p.SetSizer(gs)
 
@@ -176,6 +180,12 @@ class ToolFrame(wx.Frame):
             rotate=self.GetRotate()
             value=float(self.txt.GetValue())
             WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), value))
+
+    def onOmegaRotate(self, e):
+        if (WINDOWS != []):
+            rotate=self.GetRotate()
+            value=int(self.txt.GetValue())
+            WINDOWS[0].update_bitmap(tools.omega_rotate(WINDOWS[0].get_bitmap(), value))
 
     def GetRotate(self):
         self.panel = wx.Panel(self)
