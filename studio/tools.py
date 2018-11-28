@@ -78,6 +78,14 @@ def omega_rotate(img, rotation):
         img_conv = img_conv.rotate(1)
     return pill_to_wxbit(img_conv)
 
+def jpegify(img):
+    ''' JPEGify an image(meme version) '''
+    img_conv = wxbit_to_pil(img)
+    img_conv.save("temp\\temp.jpg",quality=2,optimize=True)
+
+    img_conv = Image.open("temp\\temp.jpg")
+    return pill_to_wxbit(img_conv)
+
 def flip_left_right(img: Image):
     '''flip an image left to right'''
     img_conv = wxbit_to_pil(img)
