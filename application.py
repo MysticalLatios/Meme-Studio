@@ -68,7 +68,7 @@ class MemeStudioGUI(wx.Frame):
         self.Centre()
 
         # just testing to see if I can open a new window
-        test = ImageWindow(300, 300)
+        # test = ImageWindow(300, 300)
 
     # function for quitting our application, under the file menu tab (?)
     def OnQuit(self, e):
@@ -76,7 +76,7 @@ class MemeStudioGUI(wx.Frame):
     
     #calls on the ImageBrowse class and makes a instance here
     def onBrowse(Self, e):
-        self.ImageBrowse = ImageBrowse()
+        Image = ImageBrowse()
 
     # Here we will instantiate our Tools window
 class ToolFrame(wx.Frame):
@@ -101,14 +101,33 @@ class ToolPanel(wx.Panel):
 # We need a seprate window where we can display our image to the user
 # Here's my attempt at making another window to do just that
 class ImageWindow(wx.Frame):
-    def __init__(self, width, height):
+ # Initiates with width, height, and the bitmap of image  
+
+    def __init__(self, width, height, imgbitmap: wx.Bitmap):
+
         wx.Frame.__init__(self, None, wx.ID_ANY, "Image Window")
 
         panel = wx.Panel(self)
 
+        imagebitmap = imgbitmap
+
+        img = wx.EmptyImage(240,240)
+        self.imageCtrl = wx.StaticBitmap(panel, wx.ID_ANY, 
+                                         wx.BitmapFromImage(img))
+
+        self.imageCtrl.SetBitmap(imgbitmap)
+
+
+        self.mainSizer = wx.BoxSizer(wx.VERTICAL)
+        
+        self.mainSizer.Add(self.imageCtrl, 0, wx.ALL, 5)
+
+        panel.SetSizer(self.mainSizer)
+
         self.SetSize(width, height)
         self.SetTitle("Image Layer")
         self.Show()
+
 
 
 
@@ -161,6 +180,16 @@ class ImageBrowse(wx.App):
             self.photoTxt.SetValue(dialog.GetPath())
         dialog.Destroy()
         self.onView()
+
+    def onView(self):
+        filepath = self.photoTxt.GetValue()
+        img = wx.EmptyImage(240,240)
+
+        img2 = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+        imageBitmap = wx.BitmapFromImage(img2)
+
+        ImageWindow(1000, 1000, imageBitmap)
+
 
 #    def OpenTools(self, e):
 #        p = wx.Panel(self)
