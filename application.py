@@ -99,14 +99,15 @@ class MemeStudioGUI(wx.Frame):
     def OnSaveAs(self, event):
 
         if WINDOWS != []:
-            with wx.FileDialog(self, "Save XYZ file", wildcard="XYZ files (*.xyz)|*.xyz", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+            with wx.FileDialog(self, "Save XYZ file", wildcard="PNG files (*.png)|*.png", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
 
                 if fileDialog.ShowModal() == wx.ID_CANCEL:
                     return     # the user changed their mind
 
         # save the current contents in the file
             pathname = fileDialog.GetPath()
-
+            print(pathname)
+            fileDialog.Destroy()
             io.write_Image(pathname, WINDOWS[0].get_bitmap)
             
 
