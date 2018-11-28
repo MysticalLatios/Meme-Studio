@@ -3,6 +3,8 @@
 from PIL import Image
 import wx
 
+###### Conversions ######
+
 def wxbit_to_wx(bit_map):
     ''' Converts a wx bitmap to a wx image '''
     return wx.ImageFromBitmap(bit_map)
@@ -46,3 +48,18 @@ def pil_to_wx(img: Image, alpha=True):
         wx_img.SetData(pil_img_data)
 
     return wx_img
+
+
+###### Normal tools ######
+
+def crop(img, x, y, x_size, y_size):
+    ''' crops an image '''
+
+
+def resize(img, x_size, y_size):
+    ''' resize an image '''
+    return img.resize((x_size,y_size))
+
+def rotate(img, rotation):
+    ''' rotate an image '''
+    return image.rotate(rotation)
