@@ -67,7 +67,7 @@ class MemeStudioGUI(wx.Frame):
         # actual functions are implemented
         self.SetMenuBar(themenubar)
         self.Bind(wx.EVT_MENU, self.OnQuit, fileQuit)
-        self.Bind(wx.EVT_MENU, self.onBrowse, fileOpen)
+        self.Bind(wx.EVT_MENU, self.onFileSearch, fileOpen)
 
         self.Bind(wx.EVT_MENU, self.toggleTools, self.toolItem)
 
@@ -95,8 +95,28 @@ class MemeStudioGUI(wx.Frame):
         self.Close()
     
     #calls on the ImageBrowse class and makes a instance here
-    def onBrowse(self, e):
-        Image = ImageBrowse()
+    def onFileSearch(self, e):
+
+        wildcard = "PNG files (*.png)|*.png"
+        dialog = wx.FileDialog(None, "Choose a file", wildcard=wildcard, style=wx.FD_OPEN)
+        if dialog.ShowModal() == wx.ID_OK:
+        
+            filepath = dialog.GetPath()
+            dialog.Destroy()
+            if filepath != '' or filepath != "":
+
+                #Create image given the filepath
+                img2 = wx.Image(filepath, wx.BITMAP_TYPE_ANY)
+
+                #Get the bit map of the image
+                imageBitmap = wx.BitmapFromImage(img2)
+
+                #Get Size of the image to shape the image window size
+                width = img2.GetWidth()
+                height = img2.GetHeight()
+
+                #Create image window with the bitmap
+                WINDOWS.append(ImageWindow(width, height, imageBitmap))
 
     def toggleTools(self, e):
         if self.toolItem.IsChecked():
