@@ -5,9 +5,9 @@ import wx
 
 ###### Conversions ######
 
-def wxbit_to_wx(bit_map):
+def wxbit_to_wx(bit_map: wx.Bitmap):
     ''' Converts a wx bitmap to a wx image '''
-    return wx.ImageFromBitmap(bit_map)
+    return bit_map.ConvertToImage()
 
 def wx_to_wxbit(img: wx.Image):
     ''' Converts a wx image to a wx bitmap '''
@@ -17,11 +17,16 @@ def wxbit_to_pil(bit_map):
     ''' turn a wxbitmap into a pil image '''
     return wx_to_pil(wxbit_to_wx(bit_map))
 
+def pill_to_wxbit(img):
+    ''' turn a pill image to a bitmap '''
+    return wx_to_wxbit(pil_to_wx(img))
+
 def wx_to_pil(img: wx.Image):
     '''turn a WX bitmap into a PIL image one'''
     #Make a new image setting the size
     pil_img = Image.new('RGB', (img.GetWidth(), img.GetHeight()))
-    pil_img.fromstring(img.GetData()) #Copy the data into the new image
+    pil_img.frombytes(bytes(img.GetData())) #Copy the data into the new image
+
     return pil_img #Return that new image
 
 def pil_to_wx(img: Image, alpha=True):
@@ -36,15 +41,15 @@ def pil_to_wx(img: Image, alpha=True):
         wx_img = wx.EmptyImage(*img.size)
         pil_RGBA = img.copy()
         pil_RGB = pil_RGBA.convert('RGB') #RGBA to RGB
-        myPilImageRgbData = pil_RGB.tostring()
+        myPilImageRgbData = pil_RGB.tobytes()
         wx_img.SetData( myPilImageRgbData )
-        wx_img.SetAlphaData( pil_RGBA.tostring()[3::4] )  # Insert alpha values into layer
+        wx_img.SetAlphaData( pil_RGBA.tobytes()[3::4] )  # Insert alpha values into layer
         
     else: #Image without alpha
         wx_img = wx.EmptyImage(*img.size)
         pil_img = img.copy()
         pil_img_rgb = pil_img.convert("RGB")
-        pil_img_data = pil_img_rgb.tostring()
+        pil_img_data = pil_img_rgb.tobytes()
         wx_img.SetData(pil_img_data)
 
     return wx_img
@@ -62,7 +67,10 @@ def resize(img, x_size, y_size):
 
 def rotate(img, rotation):
     ''' rotate an image '''
-    return img.rotate(rotation)
+    img_conv = wxbit_to_pil(img)
+    img_conv_2 = pill_to_wxbit(img_conv.rotate(rotation))
+
+    return img_conv_2
 
 def flip_left_right(img: Image):
     '''flip an image left to right'''
