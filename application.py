@@ -110,7 +110,7 @@ class MemeStudioGUI(wx.Frame):
             pathname = file_dialog.GetPath()
             print("Saving to:" + pathname)
             file_dialog.Destroy()
-            io.write_Image(pathname, WINDOWS[0].get_bitmap())
+            io.write_Image(pathname, WINDOWS[-1].get_bitmap())
             
 
     #responsible for the searching of files/images to open, currently only supports png
@@ -198,25 +198,25 @@ class ToolFrame(wx.Frame):
         if (WINDOWS != []):
             rotate=self.GetRotate()
             value=float(self.txt.GetValue())
-            WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), value))
+            WINDOWS[-1].update_bitmap(tools.rotate(WINDOWS[-1].get_bitmap(), value))
 
     def onOmegaRotate(self, e):
         if (WINDOWS != []):
             self.GetRotate()
             value=int(self.txt.GetValue())
-            WINDOWS[0].update_bitmap(tools.omega_rotate(WINDOWS[0].get_bitmap(), value))
+            WINDOWS[-1].update_bitmap(tools.omega_rotate(WINDOWS[-1].get_bitmap(), value))
 
     def onVerticalFlip(self, e):
         if (WINDOWS != []):
-            WINDOWS[0].update_bitmap(tools.flip_top_bottom(WINDOWS[0].get_bitmap()))
+            WINDOWS[-1].update_bitmap(tools.flip_top_bottom(WINDOWS[-1].get_bitmap()))
 
     def onJPG(self, e):
         if (WINDOWS != []):
-            WINDOWS[0].update_bitmap(tools.jpegify(WINDOWS[0].get_bitmap()))
+            WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap()))
             
     def onHorizantalFlip(self, e):
         if (WINDOWS != []):
-            WINDOWS[0].update_bitmap(tools.flip_left_right(WINDOWS[0].get_bitmap()))
+            WINDOWS[-1].update_bitmap(tools.flip_left_right(WINDOWS[-1].get_bitmap()))
 
     def onResize(self, e):
         if (WINDOWS != []):
@@ -224,7 +224,7 @@ class ToolFrame(wx.Frame):
             value=int(self.txt.GetValue())
             y=self.GetY()
             value2=int(self.txt2.GetValue())
-            WINDOWS[0].update_bitmap(tools.resize(WINDOWS[0].get_bitmap(), value, value))
+            WINDOWS[-1].update_bitmap(tools.resize(WINDOWS[-1].get_bitmap(), value, value))
     
     def GetRotate(self):
         self.panel = wx.Panel(self)
