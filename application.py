@@ -82,7 +82,7 @@ class MemeStudioGUI(wx.Frame):
 
 
         # this is the size of our window, title, etc
-        self.SetSize((1000, 800))
+        self.SetSize((400, 300))
         self.SetTitle('Meme Studio (Main Frame)')
         self.Centre()
 
