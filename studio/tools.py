@@ -63,3 +63,11 @@ def resize(img, x_size, y_size):
 def rotate(img, rotation):
     ''' rotate an image '''
     return img.rotate(rotation)
+
+def flip_left_right(img: Image):
+    '''flip an image left to right'''
+    return img.transpose(Image.FLIP_LEFT_RIGHT)
+
+def flip_top_bottom(img: Image):
+    '''flip an image top to bottom (For those images that are a switch(works both ways))'''
+    return img.transpose(Image.FLIP_TOP_BOTTOM)
