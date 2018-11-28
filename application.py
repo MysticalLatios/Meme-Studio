@@ -120,11 +120,12 @@ class ToolFrame(wx.Frame):
         gs = wx.GridSizer(4, 4, 5, 5)
 
         btnlabel1 = 'Rotate'
-        gs.Add(wx.Button(p, label = btnlabel1) 0, wx.EXPAND)
+        gs.Add(wx.Button(p, label = btnlabel1), 0, wx.EXPAND)
 
+        #Line of code to rotate something 25 degress
+        WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), 25))
 
-
-        for i in range(1, 17):
+        for i in range(1, 16):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
