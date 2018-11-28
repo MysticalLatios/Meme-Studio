@@ -67,6 +67,9 @@ class MemeStudioGUI(wx.Frame):
         self.SetTitle('Meme Studio (Main Frame)')
         self.Centre()
 
+        # just testing to see if I can open a new window
+        test = ImageWindow(300, 300)
+
     # function for quitting our application, under the file menu tab (?)
     def OnQuit(self, e):
         self.Close()
@@ -94,6 +97,23 @@ class ToolPanel(wx.Panel):
         title = 'Subframe {}'.format(self.frame_number)
         frame = ToolFrame(title=title)
         self.frame_number += 1
+
+# We need a seprate window where we can display our image to the user
+# Here's my attempt at making another window to do just that
+class ImageWindow(wx.Frame):
+    def __init__(self, width, height):
+        wx.Frame.__init__(self, None, wx.ID_ANY, "Image Window")
+
+        panel = wx.Panel(self)
+
+        self.SetSize(width, height)
+        self.SetTitle("Image Layer")
+        self.Show()
+
+
+
+
+
 
 # this is the class for our image browsing window
 # NOTE: this opens a separate window for the browse
@@ -161,5 +181,5 @@ def main():
 
 if __name__ == '__main__':
     # this is the image file browse function call
-    app = ImageBrowse()
+    # app = ImageBrowse()
     main() 
