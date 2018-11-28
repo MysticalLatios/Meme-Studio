@@ -63,14 +63,13 @@ def crop(img, x, y, x_size, y_size):
 
 def resize(img, x_size, y_size):
     ''' resize an image '''
-    return img.resize((x_size,y_size))
+    img_conv = wxbit_to_pil(img)
+    return pill_to_wxbit(img_conv.resize((x_size, y_size)))
 
 def rotate(img, rotation):
     ''' rotate an image '''
     img_conv = wxbit_to_pil(img)
-    img_conv_2 = pill_to_wxbit(img_conv.rotate(rotation))
-
-    return img_conv_2
+    return pill_to_wxbit(img_conv.rotate(rotation))
 
 def flip_left_right(img: Image):
     '''flip an image left to right'''
@@ -79,4 +78,5 @@ def flip_left_right(img: Image):
 
 def flip_top_bottom(img: Image):
     '''flip an image top to bottom (For those images that are a switch(works both ways))'''
-    return img.transpose(Image.FLIP_TOP_BOTTOM)
+    img_conv = wxbit_to_pil(img)
+    return pill_to_wxbit(img_conv.transpose(Image.FLIP_TOP_BOTTOM))
