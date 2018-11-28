@@ -5,7 +5,7 @@ import os
 import time
 
 #Global for the bitmap
-imgbitmap: wx.Bitmap
+imagebitmap = wx.Bitmap
 class MemeStudioGUI(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MemeStudioGUI, self).__init__(*args, **kwargs)
