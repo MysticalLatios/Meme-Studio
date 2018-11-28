@@ -1,3 +1,5 @@
+#Some code adapted from wxpython.org
+
 from PIL import Image
 import wx
 
@@ -8,5 +10,27 @@ def wx_to_pil(img: wx.Image):
     pil_img.fromstring(img.GetData()) #Copy the data into the new image
     return pil_img #Return that new image
 
-def pil_to_wx(img: Image):
+def pil_to_wx(img: Image, alpha=True):
     '''turn a PIL image into a wx one'''
+
+    alpha_present = False
+    if (img.mode[-1] == 'A'):
+        alpha_present = True
+
+    if (alpha and alpha_present):
+        
+        wx_img = wx.EmptyImage(*img.size)
+        pil_RGBA = img.copy()
+        pil_RGB = pil_RGBA.convert('RGB') #RGBA to RGB
+        myPilImageRgbData = pil_RGB.tostring()
+        wx_img.SetData( myPilImageRgbData )
+        wx_img.SetAlphaData( pil_RGBA.tostring()[3::4] )  # Insert alpha values into layer
+        
+    else: #Image without alpha
+        wx_img = wx.EmptyImage(*img.size)
+        pil_img = img.copy()
+        pil_img_rgb = pil_img.convert("RGB")
+        pil_img_data = pil_img_rgb.tostring()
+        wx_img.SetData(pil_img_data)
+
+    return wx_img
