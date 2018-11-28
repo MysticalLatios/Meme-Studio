@@ -141,22 +141,24 @@ class ToolFrame(wx.Frame):
         p = wx.Panel(self)
         gs = wx.GridSizer(4, 4, 5, 5)
 
-        btnlabel1 = 'Rotate'
-        gs.Add(wx.Button(p, label = btnlabel1), 0, wx.EXPAND)
-
         if WINDOWS != []:
             #Line of code to rotate something 25 degress
             WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), 25))
+
+        rotateBtn = wx.Button(p, wx.ID_ANY, 'Rotate')
+        gs.Add(rotateBtn, 0, wx.EXPAND)
 
         for i in range(1, 16):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
-            p.SetSizer(gs)
-  
-        def onRotate(self):
-            value = self.txt.GetValue()
-            WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), value))
+        rotateBtn.Bind(wx.EVT_BUTTON, self.onRotate)
+
+        p.SetSizer(gs)
+
+    def onRotate(self, e):
+    #    userInput = wx.TextEntryDialog(None, 'Rotate by: ',)
+        WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), 25))
 
         def GetRotate(self, e):
             self.panel = wx.Panel(self)
