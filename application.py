@@ -6,10 +6,11 @@ import os
 import time
 
 from studio import tools
+from studio import io
 
-#Make a global
-imagebitmap = wx.Bitmap
+#Global list of the windows the images will be on
 WINDOWS = []
+
 class MemeStudioGUI(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MemeStudioGUI, self).__init__(*args, **kwargs)
@@ -50,7 +51,7 @@ class MemeStudioGUI(wx.Frame):
         fileQuit = menuFile.Append(wx.ID_ANY, 'Quit', 'Quit Option')
         fileOpen = menuFile.Append(wx.ID_ANY, 'Open file', 'Open File Option')
         fileSave = menuFile.Append(wx.ID_EXIT, 'Save file', 'Save File Option')
-        fileISaveAs = menuFile.Append(wx.ID_EXIT, 'Save file as...', 'Saving File As Option')
+        fileSaveAs = menuFile.Append(wx.ID_EXIT, 'Save file as...', 'Saving File As Option')
         fileExport = menuFile.Append(wx.ID_EXIT, 'Export...', 'Export Option')
         
         #toolItem = menuTools.Append(wx.ID_ANY, 'Show Tools', 'Shows Tools Application')
@@ -69,7 +70,7 @@ class MemeStudioGUI(wx.Frame):
         self.SetMenuBar(themenubar)
         self.Bind(wx.EVT_MENU, self.OnQuit, fileQuit)
         self.Bind(wx.EVT_MENU, self.onFileSearch, fileOpen)
-
+        self.Bind(wx.EVT_MENU, self.OnSaveAs, fileSaveAs)
         self.Bind(wx.EVT_MENU, self.toggleTools, self.toolItem)
 
         self.Bind(wx.EVT_TOOL, self.OnQuit, savetool)
@@ -95,7 +96,21 @@ class MemeStudioGUI(wx.Frame):
     def OnQuit(self, e):
         self.Close()
     
-    #calls on the ImageBrowse class and makes a instance here
+    def OnSaveAs(self, event):
+
+        if WINDOWS != []:
+            with wx.FileDialog(self, "Save XYZ file", wildcard="XYZ files (*.xyz)|*.xyz", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+
+                if fileDialog.ShowModal() == wx.ID_CANCEL:
+                    return     # the user changed their mind
+
+        # save the current contents in the file
+            pathname = fileDialog.GetPath()
+
+            io.write_Image(pathname, WINDOWS[0].get_bitmap)
+            
+
+    #responsible for the searching of files/images to open, currently only supports png
     def onFileSearch(self, e):
 
         wildcard = "PNG files (*.png)|*.png"
@@ -214,6 +229,7 @@ class ImageWindow(wx.Frame):
     
 
         panel.SetSizer(self.mainSizer)
+        panel.SetBackgroundColour('#D3D3D3')
 
         self.SetSize(width, height)
 
