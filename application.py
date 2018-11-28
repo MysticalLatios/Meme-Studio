@@ -4,8 +4,8 @@ import sys
 import os
 import time
 
-#Global for the bitmap
-imagebitmap = wx.Bitmap
+from studio import tools
+
 class MemeStudioGUI(wx.Frame):
     def __init__(self, *args, **kwargs):
         super(MemeStudioGUI, self).__init__(*args, **kwargs)
@@ -119,7 +119,7 @@ class ImageWindow(wx.Frame):
         self.imageCtrl = wx.StaticBitmap(panel, wx.ID_ANY, 
                                          wx.BitmapFromImage(img))
 
-        self.imageCtrl.SetBitmap(imgbitmap)
+        self.imageCtrl.SetBitmap(tools.rotate(imgbitmap, 90))
 
 
         self.mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -135,8 +135,9 @@ class ImageWindow(wx.Frame):
 
     def update_map(self):
         while(True):
+            print("Ahhhhh shit")
             time.sleep(0.1)
-            self.imageCtrl.SetBitmap(imagebitmap)
+            self.imageCtrl.SetBitmap(tools.rotate(self.imagebitmap, 25))
 
 
 
