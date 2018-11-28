@@ -5,9 +5,7 @@ import sys
 sys.path.append("..")
 
 from PIL import Image
-import wx
 
-from studio import tools
 from studio import image_map
 from studio import filters
 
@@ -19,10 +17,9 @@ def open_Image(file_name):
     
     return im
 
-def write_Image(file_name, img: wx.Image):
-    '''Writes an wx bitmap out'''
-    pil_img = tools.wxbit_to_pil(img)
-    pil_img.save(file_name, format=None)
+def write_Image(file_name, img :Image):
+    '''Writes an image out'''
+    img.save(file_name, format=None)
 
 
 
