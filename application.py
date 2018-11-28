@@ -99,16 +99,18 @@ class MemeStudioGUI(wx.Frame):
     def OnSaveAs(self, event):
 
         if WINDOWS != []:
-            with wx.FileDialog(self, "Save XYZ file", wildcard="PNG files (*.png)|*.png", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+            file_dialog = wx.FileDialog(self, "Save XYZ file", wildcard="PNG files (*.png)|*.png", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
 
-                if fileDialog.ShowModal() == wx.ID_CANCEL:
-                    return     # the user changed their mind
+            if file_dialog.ShowModal() == wx.ID_CANCEL:
+                print("User decided on not saving after all")
+                return     # the user changed their mind
 
         # save the current contents in the file
-            pathname = fileDialog.GetPath()
-            print(pathname)
-            fileDialog.Destroy()
-            io.write_Image(pathname, WINDOWS[0].get_bitmap)
+            print(file_dialog.GetPath())
+            pathname = file_dialog.GetPath()
+            print("Saving to:" + pathname)
+            file_dialog.Destroy()
+            io.write_Image(pathname, WINDOWS[0].get_bitmap())
             
 
     #responsible for the searching of files/images to open, currently only supports png
@@ -164,11 +166,15 @@ class ToolFrame(wx.Frame):
         rotateBtn = wx.Button(p, wx.ID_ANY, 'Rotate')
         gs.Add(rotateBtn, 0, wx.EXPAND)
 
-        for i in range(1, 16):
+        omegaRotateBtn = wx.Button(p, wx.ID_ANY, 'Omega')
+        gs.Add(omegaRotateBtn, 0, wx.EXPAND)
+
+        for i in range(1, 15):
             btn = "Btn" + str(i)
             gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
         rotateBtn.Bind(wx.EVT_BUTTON, self.onRotate)
+        omegaRotateBtn.Bind(wx.EVT_BUTTON, self.onOmegaRotate)
 
         p.SetSizer(gs)
 
@@ -177,6 +183,12 @@ class ToolFrame(wx.Frame):
             rotate=self.GetRotate()
             value=float(self.txt.GetValue())
             WINDOWS[0].update_bitmap(tools.rotate(WINDOWS[0].get_bitmap(), value))
+
+    def onOmegaRotate(self, e):
+        if (WINDOWS != []):
+            rotate=self.GetRotate()
+            value=int(self.txt.GetValue())
+            WINDOWS[0].update_bitmap(tools.omega_rotate(WINDOWS[0].get_bitmap(), value))
 
     def GetRotate(self):
         self.panel = wx.Panel(self)
