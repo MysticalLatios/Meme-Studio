@@ -215,7 +215,7 @@ class ToolFrame(wx.Frame):
         if (WINDOWS != []):
             self.GetGenValue("How good do you want the image to be? (1-100)")
             compressionVal=int(self.txt.GetValue())
-            WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap(), compressionVal ))
+            WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap(), compressionVal))
             
     def onHorizantalFlip(self, e):
         if (WINDOWS != []):
