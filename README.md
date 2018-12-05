@@ -3,10 +3,17 @@
 
 A streamlined application for the creation, editing, and sharing memes
 
+#Starting meme studio
+To run have these python libraries installed
 
-# Currently in the planing and design stage
+Pillow
+wxpython
 
-Worked on by
+then run application.py
+
+
+
+#Worked on by
 
 Joshua Alpert - Mystical
 
@@ -16,8 +23,4 @@ Jeremy Walker - jwalker884
 
 
 
-In order to work on this using windows you will need these libraries
 
-
-Pillow
-wxpython
