@@ -181,6 +181,9 @@ class ToolFrame(wx.Frame):
         jpgBtn = wx.Button(p, wx.ID_ANY, 'To-JPG')
         gs.Add(jpgBtn, 0, wx.EXPAND)
 
+     #   for i in range(1, 11):
+      #      btn = "Btn" + str(i)
+      #      gs.Add(wx.Button(p, label = btn), 0, wx.EXPAND)
 
         rotateBtn.Bind(wx.EVT_BUTTON, self.onRotate)
         omegaRotateBtn.Bind(wx.EVT_BUTTON, self.onOmegaRotate)
