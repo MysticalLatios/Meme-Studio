@@ -61,7 +61,7 @@ class MemeStudioGUI(wx.Frame):
         menuTools.Check(self.toolItem.GetId(), True)
 
         
-        self.tools = ToolFrame(self, "Meme View")
+        self.tools = ToolFrame(self, "Tools Window")
         self.tools.Show()
 
         # these are our binds for menubar and toolbar methods
@@ -178,7 +178,7 @@ class ToolFrame(wx.Frame):
         resizeBtn = wx.Button(p, wx.ID_ANY, 'Resize')
         gs.Add(resizeBtn, 0, wx.EXPAND)
         
-        jpgBtn = wx.Button(p, wx.ID_ANY, 'To-JPG')
+        jpgBtn = wx.Button(p, wx.ID_ANY, 'JPEGify')
         gs.Add(jpgBtn, 0, wx.EXPAND)
 
      #   for i in range(1, 11):
@@ -189,15 +189,15 @@ class ToolFrame(wx.Frame):
         omegaRotateBtn.Bind(wx.EVT_BUTTON, self.onOmegaRotate)
         verticalFlipBtn.Bind(wx.EVT_BUTTON, self.onVerticalFlip)
         horizantalFlipBtn.Bind(wx.EVT_BUTTON, self.onHorizantalFlip)
-        resizeBtn.Bind(wx.EVT_BUTTON, self.onResize) 
-        jpgBtn.Bind(wx.EVT_BUTTON, self.onJPG)       
+        resizeBtn.Bind(wx.EVT_BUTTON, self.onResize)
+        jpgBtn.Bind(wx.EVT_BUTTON, self.onJPG)  
 
         p.SetSizer(gs)
 
     def onRotate(self, e):
         if (WINDOWS != []):
-            rotate=self.GetRotate()
-            value=float(self.txt.GetValue())
+            rotate = self.GetRotate()
+            value = float(self.txt.GetValue())
             WINDOWS[-1].update_bitmap(tools.rotate(WINDOWS[-1].get_bitmap(), value))
 
     def onOmegaRotate(self, e):
@@ -211,8 +211,11 @@ class ToolFrame(wx.Frame):
             WINDOWS[-1].update_bitmap(tools.flip_top_bottom(WINDOWS[-1].get_bitmap()))
 
     def onJPG(self, e):
+        
         if (WINDOWS != []):
-            WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap()))
+            self.GetGenValue("How good do you want the image to be? (0-100)")
+            compressionVal=int(self.txt.GetValue())
+            WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap(), compressionVal ))
             
     def onHorizantalFlip(self, e):
         if (WINDOWS != []):
@@ -225,6 +228,16 @@ class ToolFrame(wx.Frame):
             y=self.GetY()
             value2=int(self.txt2.GetValue())
             WINDOWS[-1].update_bitmap(tools.resize(WINDOWS[-1].get_bitmap(), value, value))
+    
+    #Trying to clean up code a bit and create a single function for the gathering of values
+    #Short for get General value
+    def GetGenValue(self, stringval):
+        self.panel = wx.Panel(self)
+        self.txt = wx.TextCtrl(self.panel, -1, size=(1,1))
+        dlg = wx.TextEntryDialog(self.panel, stringval,"", style=wx.OK)
+        dlg.ShowModal()
+        self.txt.SetValue(dlg.GetValue())
+        dlg.Destroy()
     
     def GetRotate(self):
         self.panel = wx.Panel(self)
