@@ -13,7 +13,7 @@ then run application.py
 
 
 
-#Worked on by
+# Worked on by
 
 Joshua Alpert - Mystical
 
