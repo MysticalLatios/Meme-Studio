@@ -196,8 +196,8 @@ class ToolFrame(wx.Frame):
 
     def onRotate(self, e):
         if (WINDOWS != []):
-            rotate=self.GetRotate()
-            value=float(self.txt.GetValue())
+            rotate = self.GetRotate()
+            value = float(self.txt.GetValue())
             WINDOWS[-1].update_bitmap(tools.rotate(WINDOWS[-1].get_bitmap(), value))
 
     def onOmegaRotate(self, e):
@@ -211,8 +211,10 @@ class ToolFrame(wx.Frame):
             WINDOWS[-1].update_bitmap(tools.flip_top_bottom(WINDOWS[-1].get_bitmap()))
 
     def onJPG(self, e):
+        self.GetGenValue("How good do you want the image to be? (0-100)")
+        compressionVal=int(self.txt.GetValue())
         if (WINDOWS != []):
-            WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap()))
+            WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap(), compressionVal ))
             
     def onHorizantalFlip(self, e):
         if (WINDOWS != []):
@@ -225,6 +227,16 @@ class ToolFrame(wx.Frame):
             y=self.GetY()
             value2=int(self.txt2.GetValue())
             WINDOWS[-1].update_bitmap(tools.resize(WINDOWS[-1].get_bitmap(), value, value))
+    
+    #Trying to clean up code a bit and create a single function for the gathering of values
+    #Short for get General value
+    def GetGenValue(self, stringval):
+        self.panel = wx.Panel(self)
+        self.txt = wx.TextCtrl(self.panel, -1, size=(1,1))
+        dlg = wx.TextEntryDialog(self.panel, stringval,"", style=wx.OK)
+        dlg.ShowModal()
+        self.txt.SetValue(dlg.GetValue())
+        dlg.Destroy()
     
     def GetRotate(self):
         self.panel = wx.Panel(self)
