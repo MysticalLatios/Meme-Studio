@@ -213,7 +213,7 @@ class ToolFrame(wx.Frame):
     def onJPG(self, e):
         
         if (WINDOWS != []):
-            self.GetGenValue("How good do you want the image to be? (0-100)")
+            self.GetGenValue("How good do you want the image to be? (1-100)")
             compressionVal=int(self.txt.GetValue())
             WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap(), compressionVal ))
             
