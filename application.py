@@ -61,7 +61,7 @@ class MemeStudioGUI(wx.Frame):
         menuTools.Check(self.toolItem.GetId(), True)
 
         
-        self.tools = ToolFrame(self, "Meme View")
+        self.tools = ToolFrame(self, "Tools Window")
         self.tools.Show()
 
         # these are our binds for menubar and toolbar methods
