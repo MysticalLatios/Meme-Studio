@@ -3,7 +3,7 @@
 
 A streamlined application for the creation, editing, and sharing memes
 
-#Starting meme studio
+# Startig Meme-Studio
 To run have these python libraries installed
 
 Pillow
