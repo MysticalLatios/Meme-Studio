@@ -178,7 +178,7 @@ class ToolFrame(wx.Frame):
         resizeBtn = wx.Button(p, wx.ID_ANY, 'Resize')
         gs.Add(resizeBtn, 0, wx.EXPAND)
         
-        jpgBtn = wx.Button(p, wx.ID_ANY, 'To-JPG')
+        jpgBtn = wx.Button(p, wx.ID_ANY, 'JPGify')
         gs.Add(jpgBtn, 0, wx.EXPAND)
 
      #   for i in range(1, 11):
