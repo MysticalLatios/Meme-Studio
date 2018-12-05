@@ -178,7 +178,7 @@ class ToolFrame(wx.Frame):
         resizeBtn = wx.Button(p, wx.ID_ANY, 'Resize')
         gs.Add(resizeBtn, 0, wx.EXPAND)
         
-        jpgBtn = wx.Button(p, wx.ID_ANY, 'JPGify')
+        jpgBtn = wx.Button(p, wx.ID_ANY, 'JPEGify')
         gs.Add(jpgBtn, 0, wx.EXPAND)
 
      #   for i in range(1, 11):
@@ -189,8 +189,8 @@ class ToolFrame(wx.Frame):
         omegaRotateBtn.Bind(wx.EVT_BUTTON, self.onOmegaRotate)
         verticalFlipBtn.Bind(wx.EVT_BUTTON, self.onVerticalFlip)
         horizantalFlipBtn.Bind(wx.EVT_BUTTON, self.onHorizantalFlip)
-        resizeBtn.Bind(wx.EVT_BUTTON, self.onResize) 
-        jpgBtn.Bind(wx.EVT_BUTTON, self.onJPG)       
+        resizeBtn.Bind(wx.EVT_BUTTON, self.onResize)
+        jpgBtn.Bind(wx.EVT_BUTTON, self.onJPG)  
 
         p.SetSizer(gs)
 
@@ -211,9 +211,10 @@ class ToolFrame(wx.Frame):
             WINDOWS[-1].update_bitmap(tools.flip_top_bottom(WINDOWS[-1].get_bitmap()))
 
     def onJPG(self, e):
-        self.GetGenValue("How good do you want the image to be? (0-100)")
-        compressionVal=int(self.txt.GetValue())
+        
         if (WINDOWS != []):
+            self.GetGenValue("How good do you want the image to be? (0-100)")
+            compressionVal=int(self.txt.GetValue())
             WINDOWS[-1].update_bitmap(tools.jpegify(WINDOWS[-1].get_bitmap(), compressionVal ))
             
     def onHorizantalFlip(self, e):
